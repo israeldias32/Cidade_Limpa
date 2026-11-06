@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cidade Limpa Manaus</title>
+<meta name="description" content="Plataforma web de educação ambiental e participação comunitária para uma Manaus mais limpa. ODS 11.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--v:#14642f;--v2:#2e9e4f;--az:#1f5fbf;--lj:#c95d06;--tx:#12301f;--bg:#f6fbf7;--bd:#cfe3d5}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{font:400 1rem/1.65 Poppins,system-ui,sans-serif;color:var(--tx);background:var(--bg)}
+:focus-visible{outline:3px solid var(--lj);outline-offset:2px}
+button{font:inherit;cursor:pointer}
+.sr{position:absolute;left:-9999px}
+.topo{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:10px 5vw;background:#fff;border-bottom:1px solid var(--bd)}
+.logo{display:flex;align-items:center;gap:6px;margin-right:auto;font-weight:800;font-size:1.25rem;color:var(--v);text-decoration:none}
+.logo b{color:var(--v2)}
+#menu{display:flex;gap:14px;font-size:.86rem}
+#menu a{text-decoration:none;font-weight:500;border-bottom:2px solid transparent}
+#menu a:hover{border-color:var(--lj)}
+.menu-btn{display:none;font-size:1.5rem;background:none;border:0}
+.btn{display:inline-block;padding:11px 22px;border-radius:999px;border:2px solid var(--lj);background:var(--lj);color:#fff;font-weight:700;text-decoration:none}
+.btn.sec{background:transparent;color:var(--v);border-color:var(--v)}
+.btn.peq{padding:6px 14px;font-size:.85rem}
+section{padding:72px 5vw}
+.alt{background:#eaf5ee}
+.in{max-width:1080px;margin:auto}
+h1,h2,h3{line-height:1.2}
+h1{font-size:clamp(2.1rem,5.5vw,3.5rem);font-weight:800;color:var(--v)}
+h2{font-size:clamp(1.6rem,3.6vw,2.3rem);font-weight:800;color:var(--v);margin-bottom:8px}
+h3{margin:0 0 8px}
+.sub{max-width:62ch;margin-bottom:26px}
+.hero{background:linear-gradient(#dff0fc,var(--bg));padding-top:56px}
+.hero .in{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+.hero p{margin:16px 0 24px;max-width:50ch;font-size:1.1rem}
+.hero .btn{margin:0 10px 10px 0}
+.sky{width:100%;height:auto}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.in.g2{max-width:1080px}
+.card{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:22px}
+.prob{border-top:6px solid var(--lj)}
+.sol{border-top:6px solid var(--v2)}
+.passos{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;counter-reset:p}
+.passos li{counter-increment:p;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:18px}
+.passos li::before{content:counter(p);display:grid;place-items:center;width:34px;height:34px;margin-bottom:8px;border-radius:50%;background:var(--v2);color:#fff;font-weight:700}
+.passos li:nth-child(4)::before{background:var(--lj)}
+.passos li:nth-child(5)::before{background:var(--az)}
+.passos h3{font-size:1rem}
+.passos p{font-size:.9rem}
+.abas,.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.abas button{padding:8px 20px;border-radius:999px;border:2px solid var(--c);background:#fff;color:var(--c);font-weight:700}
+.abas button[aria-pressed=true]{background:var(--c);color:#fff}
+#edu-painel{border-left:8px solid var(--c,var(--v2))}
+#edu-painel p{margin-bottom:8px}
+.chips button{padding:4px 12px;border-radius:999px;border:1px solid var(--v);background:#fff;color:var(--v);font-size:.85rem}
+.linha{display:flex;gap:8px;margin-bottom:12px}
+input,textarea{width:100%;padding:10px 12px;margin:4px 0 12px;border:1px solid #9bbfa7;border-radius:8px;font:inherit;background:#fff}
+.linha input{margin:0}
+label{font-weight:500;font-size:.92rem}
+#mapa-frame{width:100%;height:380px;border:1px solid var(--bd);border-radius:12px}
+#den-prev{display:block;max-width:160px;border-radius:8px;margin-bottom:10px}
+.nota{font-size:.8rem;opacity:.8;margin:6px 0 12px}
+.msg{margin-top:10px;font-weight:700;color:var(--v)}
+.msg.erro{color:#b00020}
+.lista{list-style:none;padding:0;display:grid;gap:10px}
+.lista li{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:12px 14px;font-size:.92rem}
+.vazio{opacity:.75}
+.badge{display:inline-block;margin-left:6px;padding:1px 10px;border-radius:999px;font-size:.75rem;font-weight:700;background:#fff3d6;color:#7a4a00}
+.badge.a{background:#d9f0e0;color:var(--v)}
+.badge.m{background:#dbe8fb;color:#153f87}
+.bl{margin:12px 0}
+.equipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:12px 0 26px}
+.equipe h4{color:var(--v)}
+.ods{background:var(--lj);color:#fff}
+.ods .in{display:flex;gap:28px;align-items:center}
+.ods h2{color:#fff}
+.num{font-size:6rem;font-weight:800;line-height:1}
+footer{padding:24px 5vw;text-align:center;background:var(--v);color:#fff;font-size:.9rem}
+dialog{margin:auto;padding:24px;border:0;border-radius:14px;width:min(92vw,380px)}
+dialog::backdrop{background:#0008}
+.bot-btn{position:fixed;right:18px;bottom:18px;z-index:30;padding:12px 22px;border:0;border-radius:999px;background:var(--az);color:#fff;font-weight:700}
+.bot{position:fixed;right:18px;bottom:72px;z-index:30;width:min(92vw,340px);padding:14px;background:#fff;border:1px solid var(--bd);border-radius:14px;box-shadow:0 8px 28px #0003}
+.bot[hidden]{display:none}
+#bot-msgs{max-height:260px;overflow:auto;display:grid;gap:8px;margin-bottom:10px}
+#bot-msgs p{max-width:90%;padding:8px 12px;border-radius:12px;font-size:.9rem;background:#eaf5ee}
+#bot-msgs p.eu{justify-self:end;background:var(--az);color:#fff}
+@media(max-width:900px){
+  #menu{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;padding:12px 5vw;background:#fff;border-bottom:1px solid var(--bd)}
+  #menu.aberto{display:flex}
+  .menu-btn{display:block}
+  .hero .in,.g2{grid-template-columns:1fr}
+  .ods .in{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+:root{--card:#fff;--sh:0 6px 24px #14642f1f}
+.topo{backdrop-filter:blur(8px);background:#ffffffee}
+#menu{flex-wrap:wrap;gap:6px 12px}
+.hero{position:relative;overflow:hidden;padding-top:72px;background:radial-gradient(circle at 88% 12%,#ffe6a0 0,#ffe6a000 20%),linear-gradient(#cfe9fb,var(--bg) 88%)}
+.hero h1{font-size:clamp(2.3rem,6vw,4rem);letter-spacing:-.02em}
+.sky{filter:drop-shadow(0 12px 18px #14642f33)}
+.onda{animation:onda 6s ease-in-out infinite alternate}
+@keyframes onda{to{transform:translateX(-18px)}}
+h2::after{content:"";display:block;width:56px;height:5px;margin-top:8px;border-radius:5px;background:linear-gradient(90deg,var(--v2),var(--lj))}
+.ods h2::after{background:#fff}
+.card,.passos li,.lista li{box-shadow:var(--sh);transition:transform .2s,box-shadow .2s}
+.card:hover,.passos li:hover{transform:translateY(-4px)}
+.btn{box-shadow:0 4px 12px #c95d0640;transition:transform .15s,filter .15s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn:active{transform:scale(.96)}
+.ods{background:linear-gradient(120deg,#c95d06,#8f3f00)}
+footer{background:linear-gradient(90deg,var(--v),#0e4a23)}
+.jogo{margin-top:20px}
+.jg-item{font-size:1.7rem;font-weight:800;margin:6px 0 12px;color:var(--lj)}
+details{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px 16px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:700}
+details[open] summary{margin-bottom:6px;color:var(--v)}
+[data-theme=dark]{--bg:#0e1b13;--tx:#e4f2e8;--bd:#2a4634;--v:#7fd69a;--card:#16291d;color-scheme:dark}
+[data-theme=dark] :is(.topo,.card,.passos li,.lista li,.bot,dialog,#menu){background:var(--card)}
+[data-theme=dark] :is(input,textarea,.abas button,.chips button){background:var(--card);color:var(--tx)}
+[data-theme=dark] .abas button[aria-pressed=true]{background:var(--c);color:#fff}
+[data-theme=dark] .alt{background:#12251a}
+[data-theme=dark] .hero{background:linear-gradient(#10283a,var(--bg) 88%)}
+[data-theme=dark] #bot-msgs p{background:#24402f}
+[data-theme=dark] #bot-msgs p.eu{background:var(--az)}
+@media(prefers-reduced-motion:reduce){.onda{animation:none}.card,.btn,.passos li{transition:none}}
+</style>
+</head>
+<body>
+<header class="topo">
+  <a class="logo" href="#inicio"><svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path fill="#2e9e4f" d="M20 3C9 3 4 9 4 15c0 1.500.4 2.800 1 3.900C6.500 14 10 11 14 9c-4 3-7 6-8 11 1 .6 2.300 1 4 1 6.500 0 10-6 10-18z"/></svg>Cidade <b>Limpa</b></a>
+  <nav id="menu" aria-label="Principal">
+    <a href="#problema">O problema</a><a href="#como">Como funciona</a><a href="#educacao">Educação</a><a href="#mapa">Pontos de coleta</a><a href="#denuncia">Denúncia</a><a href="#mutiroes">Mutirões</a><a href="#ods">ODS 11</a><a href="#projeto">O projeto</a>
+  </nav>
+  <button id="btn-conta" class="btn peq sec">Entrar</button>
+  <button id="tema" class="btn peq sec" aria-label="Alternar tema claro ou escuro">Escuro</button>
+  <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false">☰</button>
+</header>
+
+<main>
+<section id="inicio" class="hero"><div class="in">
+  <div>
+    <h1>Menos lixo nas ruas, mais vida para Manaus.</h1>
+    <p>Aprenda a descartar corretamente, encontre pontos de coleta, denuncie lixo irregular e participe de mutirões de limpeza. Tudo em um só lugar.</p>
+    <a class="btn" href="#denuncia">Denunciar lixo irregular</a><a class="btn sec" href="#mapa">Encontrar ponto de coleta</a>
+  </div>
+  <svg class="sky" viewBox="0 0 420 200" role="img" aria-label="Ponte Rio Negro sobre o rio e prédios de Manaus">
+    <rect class="onda" x="-20" y="160" width="460" height="40" fill="#bcdcf4"/>
+    <g fill="#cfe8d6"><rect x="10" y="100" width="30" height="60"/><rect x="45" y="80" width="26" height="80"/><rect x="340" y="90" width="34" height="70"/><rect x="380" y="115" width="30" height="45"/></g>
+    <path d="M60 150H400" stroke="#14642f" stroke-width="5"/><path d="M246 150L252 24L258 150Z" fill="#14642f"/>
+    <path stroke="#2e9e4f" stroke-width="1.500" d="M252 38L120 150M252 55L160 150M252 72L205 150M252 38L384 150M252 55L344 150M252 72L300 150"/>
+  </svg>
+</div></section>
+
+<section id="problema"><div class="in">
+  <h2>O problema e a solução</h2>
+  <p class="sub">Em Manaus, cidade cortada por igarapés, o lixo descartado de forma errada polui rios e solo e entope a drenagem.</p>
+  <div class="g2">
+    <article class="card prob"><h3>O problema</h3><p>Descarte inadequado de resíduos em ruas, praças, igarapés e outros espaços públicos, somado à falta de informação sobre separação, reciclagem e pontos de coleta seletiva.</p></article>
+    <article class="card sol"><h3>A solução</h3><p>Uma plataforma digital que informa, orienta, conecta e incentiva a população de Manaus a cuidar da cidade, reunindo informação, denúncia e mobilização comunitária.</p></article>
+  </div>
+</div></section>
+
+<section id="como" class="alt"><div class="in">
+  <h2>Como funciona</h2>
+  <p class="sub">É simples, rápido e faz a diferença.</p>
+  <ol class="passos">
+    <li><h3>Acessa o site</h3><p>Entre na plataforma pelo navegador.</p></li>
+    <li><h3>Login ou cadastro</h3><p>Crie sua conta ou acesse com seu login.</p></li>
+    <li><h3>Menu principal</h3><p>Explore todas as funcionalidades.</p></li>
+    <li><h3>Denunciar lixo irregular</h3><p>Escolha a opção de denúncia.</p></li>
+    <li><h3>Informar local e imagem</h3><p>Envie a localização e, se puder, uma foto.</p></li>
+    <li><h3>Sistema registra</h3><p>A denúncia é registrada no sistema.</p></li>
+    <li><h3>Confirmação</h3><p>Você recebe um comprovante da denúncia.</p></li>
+  </ol>
+</div></section>
+
+<section id="educacao"><div class="in">
+  <h2>Educação ambiental</h2>
+  <p class="sub">Aprenda a separar, reciclar e descartar corretamente. Escolha o material:</p>
+  <div id="edu-abas" class="abas"></div>
+  <div id="edu-painel" class="card" aria-live="polite"></div>
+  <div class="card jogo"><h3>Jogo: separe o lixo</h3><p>Em qual lixeira vai este item?</p><p id="jg-item" class="jg-item"></p><div id="jg-bins" class="abas"></div><p id="jg-msg" class="msg" role="status"></p><p class="nota">Pontos: <b id="jg-pts">0</b> · Acertos seguidos: <b id="jg-seq">0</b> <button id="jg-reset" class="btn peq sec">Reiniciar</button></p></div>
+</div></section>
+
+<section id="mapa" class="alt"><div class="in">
+  <h2>Pontos de coleta seletiva</h2>
+  <p class="sub">Digite um bairro de Manaus para buscar ecopontos e locais de coleta seletiva no mapa.</p>
+  <form id="busca-form" class="linha"><label class="sr" for="busca-bairro">Bairro</label><input id="busca-bairro" placeholder="Ex.: Ponta Negra" required><button class="btn">Buscar no mapa</button></form>
+  <div id="chips" class="chips"></div>
+  <iframe id="mapa-frame" title="Mapa de pontos de coleta" loading="lazy" src="https://maps.google.com/maps?q=ecoponto%20coleta%20seletiva%20Manaus&output=embed"></iframe>
+</div></section>
+
+<section id="denuncia"><div class="in g2">
+  <div>
+    <h2>Denunciar lixo irregular</h2>
+    <p class="sub">Informe o local, descreva o problema e, se possível, anexe uma foto. Você recebe um protocolo para acompanhar.</p>
+    <form id="form-den" class="card">
+      <label for="den-local">Local da ocorrência *</label>
+      <input id="den-local" placeholder="Rua, bairro ou ponto de referência" required>
+      <button type="button" id="den-geo" class="btn peq sec">Usar minha localização</button>
+      <label for="den-desc">Descrição (opcional)</label>
+      <textarea id="den-desc" rows="3" placeholder="Descreva o que você encontrou"></textarea>
+      <label for="den-foto">Foto (opcional)</label>
+      <input id="den-foto" type="file" accept="image/*"><img id="den-prev" alt="Prévia da foto" hidden>
+      <p class="nota">Seus dados são usados apenas para registrar a denúncia (LGPD, Lei nº 13.709/2018).</p>
+      <button class="btn">Enviar denúncia</button>
+      <p id="den-msg" class="msg" role="status"></p>
+    </form>
+  </div>
+  <div><h3>Minhas denúncias</h3><ul id="den-lista" class="lista"></ul></div>
+</div></section>
+
+<section id="mutiroes" class="alt"><div class="in g2">
+  <div>
+    <h2>Ações e mutirões</h2>
+    <p class="sub">Cadastre uma ação de limpeza na sua região ou participe das já cadastradas.</p>
+    <form id="form-mut" class="card">
+      <label for="mut-t">Nome da ação *</label><input id="mut-t" required>
+      <label for="mut-d">Data *</label><input id="mut-d" type="date" required>
+      <label for="mut-l">Local *</label><input id="mut-l" required>
+      <button class="btn">Cadastrar ação</button>
+    </form>
+  </div>
+  <div><h3>Próximas ações</h3><ul id="mut-lista" class="lista"></ul></div>
+</div></section>
+
+<section id="duvidas"><div class="in">
+  <h2>Dúvidas frequentes</h2>
+  <details><summary>Preciso lavar as embalagens antes de descartar?</summary><p>Basta enxaguar rapidamente para tirar os restos. Embalagens muito engorduradas ou com comida contaminam o material reciclável.</p></details>
+  <details><summary>O que faço com óleo de cozinha usado?</summary><p>Guarde em garrafa PET bem fechada e leve a um ponto de coleta de óleo. Nunca jogue na pia: ele entope encanamentos e polui os igarapés.</p></details>
+  <details><summary>Pilhas e eletrônicos podem ir no lixo comum?</summary><p>Não. Pilhas, baterias, lâmpadas e eletrônicos têm descarte específico (logística reversa). Procure lojas e pontos de coleta que recebam esses itens.</p></details>
+  <details><summary>O que acontece depois que envio uma denúncia?</summary><p>Neste protótipo, ela fica registrada com um protocolo e o status "Em análise", apenas no seu navegador. Na versão completa, a equipe definirá quem analisa as ocorrências e como elas serão repassadas aos órgãos responsáveis.</p></details>
+</div></section>
+
+<section id="ods" class="ods"><div class="in">
+  <p class="num">11</p>
+  <div><h2>ODS 11: Cidades e Comunidades Sustentáveis</h2>
+  <p>A meta é tornar as cidades inclusivas, seguras, resilientes e sustentáveis (ONU, 2015). O Cidade Limpa responde a duas dimensões dessa meta: a gestão de resíduos e a participação da população no cuidado com a cidade. Pequenas atitudes, grandes transformações.</p></div>
+</div></section>
+
+<section id="projeto"><div class="in">
+  <h2>O projeto</h2>
+  <p class="sub">Projeto Extensionista e Integrador do curso de Análise e Desenvolvimento de Sistemas (CIESA), orientado pela Profa. Janaina Souza. Palavras-chave: resíduos sólidos, educação ambiental, ODS 11, plataforma digital, Manaus.</p>
+  <h3>Equipe (Scrum)</h3>
+  <div class="equipe">
+    <div class="card"><h4>Israel Dias</h4><p>Product Owner e Developer</p></div>
+    <div class="card"><h4>Davi dos Santos</h4><p>Scrum Master</p></div>
+    <div class="card"><h4>Elyas Douglas</h4><p>Developer</p></div>
+    <div class="card"><h4>Antônio Neto</h4><p>Developer</p></div>
+  </div>
+  <h3>Product Backlog</h3>
+  <ul class="lista bl">
+    <li><b>US01</b> Informações sobre descarte correto <span class="badge a">Alta</span></li>
+    <li><b>US02</b> Denunciar descarte irregular com endereço, descrição e foto <span class="badge a">Alta</span></li>
+    <li><b>US03</b> Consultar pontos de coleta seletiva e ecopontos <span class="badge a">Alta</span></li>
+    <li><b>US04</b> Conversar com um chatbot sobre reciclagem <span class="badge m">Média</span></li>
+    <li><b>US05</b> Conteúdos educativos sobre reciclagem e igarapés <span class="badge m">Média</span></li>
+    <li><b>US06</b> Conhecer ações e mutirões de limpeza <span class="badge m">Média</span></li>
+    <li><b>US07</b> Organizar e consultar os registros de denúncias <span class="badge a">Alta</span></li>
+  </ul>
+  <p class="nota">Tecnologias previstas: HTML5, CSS3, JavaScript, Python e MySQL.</p>
+</div></section>
+</main>
+
+<footer><p>Cidade Limpa Manaus · Análise e Desenvolvimento de Sistemas · CIESA · 2026</p></footer>
+
+<dialog id="dlg">
+  <form id="f-conta" method="dialog">
+    <h3>Entrar ou cadastrar</h3>
+    <label for="c-nome">Nome</label><input id="c-nome" required>
+    <label for="c-mail">E-mail</label><input id="c-mail" type="email" required>
+    <p class="nota">Protótipo: os dados ficam salvos só neste navegador.</p>
+    <button class="btn">Continuar</button> <button type="button" class="btn sec" id="c-fechar">Cancelar</button>
+  </form>
+</dialog>
+
+<button id="bot-btn" class="bot-btn" aria-expanded="false">Chatbot</button>
+<section id="bot" class="bot" hidden aria-label="Chatbot Cidade Limpa">
+  <div id="bot-msgs" aria-live="polite"></div>
+  <div id="bot-chips" class="chips"></div>
+  <form id="bot-form" class="linha"><label class="sr" for="bot-in">Sua dúvida</label><input id="bot-in" placeholder="Digite sua dúvida" autocomplete="off"><button class="btn peq">Enviar</button></form>
+</section>
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ls = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+
+/* Menu mobile */
+const menu = $('#menu'), menuBtn = $('.menu-btn');
+menuBtn.addEventListener('click', () => {
+  const aberto = menu.classList.toggle('aberto');
+  menuBtn.setAttribute('aria-expanded', aberto);
+});
+menu.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A') { menu.classList.remove('aberto'); menuBtn.setAttribute('aria-expanded', false); }
+});
+
+/* Login / cadastro simplificado (só neste navegador, sem senha) */
+let user = ls.get('cl_user', null);
+const dlg = $('#dlg'), btnConta = $('#btn-conta');
+const pintaUser = () => { btnConta.textContent = user ? 'Olá, ' + user.nome.split(' ')[0] + ' (sair)' : 'Entrar'; };
+btnConta.addEventListener('click', () => {
+  if (user) { user = null; localStorage.removeItem('cl_user'); pintaUser(); } else dlg.showModal();
+});
+$('#c-fechar').addEventListener('click', () => dlg.close());
+$('#f-conta').addEventListener('submit', (e) => {
+  e.preventDefault();
+  user = { nome: $('#c-nome').value.trim(), email: $('#c-mail').value.trim() };
+  ls.set('cl_user', user); pintaUser(); dlg.close();
+});
+pintaUser();
+
+/* Educação ambiental */
+const MAT = {
+  Papel: { c: '#1f5fbf', vai: 'Jornais, revistas, folhas, caixas de papelão e embalagens de papel.', nao: 'Papel higiênico, guardanapo usado, papel engordurado e fotografias.', dica: 'Mantenha o papel seco e limpo e desmonte as caixas.' },
+  Plástico: { c: '#c62828', vai: 'Garrafas PET, potes, embalagens, sacolas e tampas.', nao: 'Espuma, adesivos, cabos e embalagens muito sujas.', dica: 'Enxágue rapidamente e amasse para ocupar menos espaço.' },
+  Metal: { c: '#8a6a00', vai: 'Latas de alumínio e de aço, tampas metálicas e arames.', nao: 'Esponja de aço, pilhas e latas de tinta ou aerossol com resíduo.', dica: 'Enxágue e amasse as latas antes de descartar.' },
+  Vidro: { c: '#2e7d32', vai: 'Garrafas, potes e frascos de vidro.', nao: 'Espelhos, vidro de janela, cerâmica e lâmpadas.', dica: 'Embrulhe cacos em jornal para proteger quem faz a coleta.' }
+};
+const abas = $('#edu-abas'), painel = $('#edu-painel');
+function mostraMat(nome) {
+  const m = MAT[nome];
+  painel.style.setProperty('--c', m.c);
+  painel.innerHTML = `<h3>${nome}</h3><p><b>Pode:</b> ${m.vai}</p><p><b>Não pode:</b> ${m.nao}</p><p><b>Dica:</b> ${m.dica}</p>`;
+  abas.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', b.textContent === nome));
+}
+Object.keys(MAT).forEach((n) => {
+  const b = document.createElement('button');
+  b.textContent = n; b.style.setProperty('--c', MAT[n].c);
+  b.addEventListener('click', () => mostraMat(n));
+  abas.appendChild(b);
+});
+mostraMat('Papel');
+
+/* Mapa de pontos de coleta (busca no Google Maps) */
+const frame = $('#mapa-frame');
+function buscaMapa(bairro) {
+  const q = 'ecoponto coleta seletiva ' + bairro + ' Manaus';
+  frame.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(q) + '&output=embed';
+}
+$('#busca-form').addEventListener('submit', (e) => { e.preventDefault(); buscaMapa($('#busca-bairro').value.trim()); });
+['Centro', 'Ponta Negra', 'Cidade Nova', 'Adrianópolis', 'Cachoeirinha', 'Flores'].forEach((b) => {
+  const btn = document.createElement('button');
+  btn.textContent = b;
+  btn.addEventListener('click', () => { $('#busca-bairro').value = b; buscaMapa(b); });
+  $('#chips').appendChild(btn);
+});
+
+/* Denúncia de lixo irregular */
+const msgDen = $('#den-msg'), listaDen = $('#den-lista');
+let denuncias = ls.get('cl_denuncias', []);
+function pintaDen() {
+  listaDen.innerHTML = denuncias.length
+    ? denuncias.map((d) => `<li><b>${esc(d.id)}</b> <span class="badge">${esc(d.status)}</span><br>${esc(d.local)}<br><small>${esc(d.data)}${d.foto ? ' · foto: ' + esc(d.foto) : ''}</small></li>`).join('')
+    : '<li class="vazio">Você ainda não enviou denúncias.</li>';
+}
+const aviso = (t, erro) => { msgDen.textContent = t; msgDen.className = 'msg' + (erro ? ' erro' : ''); };
+$('#den-geo').addEventListener('click', () => {
+  if (!navigator.geolocation) return aviso('Seu navegador não permite localização.', true);
+  navigator.geolocation.getCurrentPosition(
+    (p) => { $('#den-local').value = `Coordenadas: ${p.coords.latitude.toFixed(5)}, ${p.coords.longitude.toFixed(5)}`; aviso(''); },
+    () => aviso('Não foi possível obter sua localização. Digite o endereço.', true)
+  );
+});
+$('#den-foto').addEventListener('change', (e) => {
+  const f = e.target.files[0], img = $('#den-prev');
+  if (!f) { img.hidden = true; return; }
+  const r = new FileReader();
+  r.onload = () => { img.src = r.result; img.hidden = false; };
+  r.readAsDataURL(f);
+});
+$('#form-den').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!user) { aviso('Entre ou cadastre-se para enviar a denúncia.', true); dlg.showModal(); return; }
+  const local = $('#den-local').value.trim();
+  if (!local) return aviso('Informe o local da ocorrência.', true);
+  const f = $('#den-foto').files[0];
+  denuncias.unshift({
+    id: 'CL-' + Date.now().toString(36).toUpperCase(), local, desc: $('#den-desc').value.trim(),
+    foto: f ? f.name : '', data: new Date().toLocaleString('pt-BR'), status: 'Em análise'
+  });
+  ls.set('cl_denuncias', denuncias); pintaDen();
+  aviso('Denúncia enviada com sucesso! Protocolo: ' + denuncias[0].id);
+  e.target.reset(); $('#den-prev').hidden = true;
+});
+pintaDen();
+
+/* Ações e mutirões */
+let mutiroes = ls.get('cl_mutiroes', []);
+const listaMut = $('#mut-lista');
+function pintaMut() {
+  listaMut.innerHTML = mutiroes.length
+    ? mutiroes.map((m, i) => `<li><b>${esc(m.t)}</b><br>${esc(m.d.split('-').reverse().join('/'))} · ${esc(m.l)}<br><small>${m.p} participante(s)</small> <button class="btn peq sec" data-i="${i}">${m.eu ? 'Cancelar participação' : 'Quero participar'}</button></li>`).join('')
+    : '<li class="vazio">Nenhuma ação cadastrada. Cadastre a primeira.</li>';
+}
+$('#form-mut').addEventListener('submit', (e) => {
+  e.preventDefault();
+  mutiroes.push({ t: $('#mut-t').value.trim(), d: $('#mut-d').value, l: $('#mut-l').value.trim(), p: 0, eu: false });
+  mutiroes.sort((a, b) => a.d.localeCompare(b.d));
+  ls.set('cl_mutiroes', mutiroes); pintaMut(); e.target.reset();
+});
+listaMut.addEventListener('click', (e) => {
+  const i = e.target.dataset.i;
+  if (i === undefined) return;
+  const m = mutiroes[i];
+  m.eu = !m.eu; m.p += m.eu ? 1 : -1;
+  ls.set('cl_mutiroes', mutiroes); pintaMut();
+});
+pintaMut();
+
+/* Chatbot */
+const RESP = [
+  [/papel|papelao|jornal/, 'Papel e papelão vão na coleta seletiva se estiverem secos e limpos. Papel higiênico, guardanapo usado e papel engordurado não são recicláveis.'],
+  [/plastico|pet|garrafa|sacola/, 'Garrafas PET, potes e embalagens plásticas podem ser recicladas. Enxágue e amasse antes de descartar.'],
+  [/metal|lata|aluminio/, 'Latas de alumínio e de aço são recicláveis. Enxágue e amasse. Latas de tinta ou aerossol com resíduo precisam de descarte específico.'],
+  [/vidro|espelho/, 'Garrafas e potes de vidro são recicláveis. Espelhos, vidro de janela e cerâmica não. Embrulhe cacos em jornal.'],
+  [/oleo/, 'Não jogue óleo de cozinha na pia. Guarde em garrafa PET bem fechada e leve a um ponto de coleta de óleo.'],
+  [/pilha|bateria|eletronic|celular|lampada/, 'Pilhas, baterias, eletrônicos e lâmpadas não vão no lixo comum. Procure lojas e pontos de coleta específicos.'],
+  [/organic|compost|comida|resto/, 'Restos de comida e de poda são resíduos orgânicos e podem virar adubo por meio da compostagem.'],
+  [/igarape|rio|drenagem|enchente/, 'Lixo jogado na rua chega aos igarapés, polui a água e entope a drenagem. Descarte sempre em local adequado.'],
+  [/denunci|irregular|entulho/, 'Para denunciar lixo irregular, use a seção "Denunciar lixo irregular": informe o local, descreva o problema e anexe uma foto.'],
+  [/ponto|coleta|ecoponto|onde/, 'Na seção "Pontos de coleta seletiva", digite o seu bairro para buscar ecopontos no mapa.'],
+  [/mutirao|acao|voluntar|participar/, 'Veja a seção "Ações e mutirões" para cadastrar uma ação ou participar de uma.'],
+  [/ods|agenda|onu/, 'O projeto está alinhado à ODS 11, Cidades e Comunidades Sustentáveis, da Agenda 2030 da ONU.']
+];
+const SUGESTOES = ['Como descartar plástico?', 'Posso reciclar vidro?', 'Onde achar ponto de coleta?', 'Como denunciar lixo?'];
+const botBox = $('#bot'), botMsgs = $('#bot-msgs');
+function fala(t, eu) {
+  const p = document.createElement('p');
+  p.textContent = t; if (eu) p.className = 'eu';
+  botMsgs.appendChild(p); botMsgs.scrollTop = botMsgs.scrollHeight;
+}
+function responde(txt) {
+  fala(txt, true);
+  const n = txt.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const r = RESP.find(([re]) => re.test(n));
+  fala(r ? r[1] : 'Ainda não sei responder isso. Pergunte sobre papel, plástico, metal, vidro, óleo, pilhas, pontos de coleta ou denúncias.');
+}
+$('#bot-btn').addEventListener('click', (e) => {
+  botBox.hidden = !botBox.hidden;
+  e.currentTarget.setAttribute('aria-expanded', !botBox.hidden);
+  if (!botBox.hidden && !botMsgs.children.length) fala('Olá! Sou o assistente do Cidade Limpa. Como posso ajudar?');
+});
+SUGESTOES.forEach((s) => {
+  const b = document.createElement('button');
+  b.textContent = s; b.addEventListener('click', () => responde(s));
+  $('#bot-chips').appendChild(b);
+});
+$('#bot-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const v = $('#bot-in').value.trim();
+  if (v) { responde(v); $('#bot-in').value = ''; }
+});
+
+/* Tema claro/escuro */
+const temaBtn = $('#tema');
+const setTema = (t) => { document.documentElement.dataset.theme = t; temaBtn.textContent = t === 'dark' ? 'Claro' : 'Escuro'; ls.set('cl_tema', t); };
+setTema(ls.get('cl_tema', 'light'));
+temaBtn.addEventListener('click', () => setTema(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+
+/* Jogo: separe o lixo */
+const ITENS = [['Jornal velho', 'Papel'], ['Garrafa PET', 'Plástico'], ['Lata de refrigerante', 'Metal'], ['Pote de vidro', 'Vidro'], ['Caixa de papelão', 'Papel'], ['Sacola plástica', 'Plástico'], ['Lata de atum', 'Metal'], ['Garrafa de vidro', 'Vidro'], ['Revista', 'Papel']];
+let atual, pts = 0, seq = 0;
+const jgMsg = $('#jg-msg');
+const sorteia = () => { atual = ITENS[Math.floor(Math.random() * ITENS.length)]; $('#jg-item').textContent = atual[0]; };
+const placar = () => { $('#jg-pts').textContent = pts; $('#jg-seq').textContent = seq; };
+Object.keys(MAT).forEach((n) => {
+  const b = document.createElement('button');
+  b.textContent = n; b.style.setProperty('--c', MAT[n].c);
+  b.addEventListener('click', () => {
+    if (n === atual[1]) { pts += 10; seq++; jgMsg.className = 'msg'; jgMsg.textContent = 'Acertou! ' + atual[0] + ' vai em ' + n + '.'; }
+    else { seq = 0; jgMsg.className = 'msg erro'; jgMsg.textContent = 'Quase! ' + atual[0] + ' vai em ' + atual[1] + '.'; }
+    placar(); sorteia();
+  });
+  $('#jg-bins').appendChild(b);
+});
+$('#jg-reset').addEventListener('click', () => { pts = 0; seq = 0; jgMsg.textContent = ''; placar(); sorteia(); });
+sorteia();
+</script>
+</body>
+</html>
